@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install dependencies
@@ -31,5 +31,7 @@ jobs:
           PUBLIC_GOOGLE_MAPS_KEY: ""
           CF_ANALYTICS_TOKEN: ""
 
+      # Runs in your copy of the template, not in the template repo itself (which is all placeholders by design).
       - name: Check for placeholders
+        if: github.repository != 'jonblakesilva/local-service-template'
         run: node scripts/check-placeholders.js

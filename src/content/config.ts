@@ -15,6 +15,7 @@ const blogCollection = defineCollection({
     author: z.string().default('The Lead Venture'),
     category: z.string(),
     tags: z.array(z.string()),
+    tldr: z.array(z.string()).optional(), // optional key-takeaway bullets shown at the top of the post
   }),
 });
 
