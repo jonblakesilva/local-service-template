@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import ArticleSchema from "@/components/articleschema.astro";
 import { business } from "@/config/business";
@@ -7,15 +7,15 @@ import { business } from "@/config/business";
 export async function getStaticPaths() {
   const blogEntries = await getCollection("blog", ({ data }) => !data.draft);
   return blogEntries.map((entry) => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.id },
     props: { entry },
   }));
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
-const words = entry.body.split(/\s+/).length;
+const words = (entry.body ?? "").split(/\s+/).length;
 const readTime = Math.ceil(words / 200);
 
 const formattedDate = entry.data.publishDate.toLocaleDateString("en-US", {

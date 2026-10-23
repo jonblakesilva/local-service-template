@@ -24,7 +24,7 @@ A modern, production-ready Astro website template built for local service busine
 
 ## Quick Start
 
-Requires **Node.js 22.12 or newer**.
+Requires **Node.js 22.23 or newer**.
 
 ```bash
 npm install

@@ -38,7 +38,7 @@ const posts = (
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
           {posts.map((post, i) => (
             <article class="bg-white rounded-2xl border border-neutral-200 overflow-hidden flex flex-col hover:shadow-lg hover:border-neutral-300 transition-all duration-200 group">
-              <a href={`/blog/${post.slug}`} class="block overflow-hidden aspect-[16/9] bg-neutral-100">
+              <a href={`/blog/${post.id}`} class="block overflow-hidden aspect-[16/9] bg-neutral-100">
                 {post.data.image?.src ? (
                   <img
                     src={post.data.image.src}
@@ -58,7 +58,7 @@ const posts = (
                   {post.data.category}
                 </span>
                 <h2 class="font-heading text-xl font-bold text-primary-900 leading-snug mb-3 flex-1">
-                  <a href={`/blog/${post.slug}`} class="hover:text-accent-600 transition-colors">
+                  <a href={`/blog/${post.id}`} class="hover:text-accent-600 transition-colors">
                     {post.data.title}
                   </a>
                 </h2>
@@ -79,7 +79,7 @@ const posts = (
                     })}
                   </time>
                   <a
-                    href={`/blog/${post.slug}`}
+                    href={`/blog/${post.id}`}
                     class="text-accent-600 text-xs font-semibold hover:text-accent-700 transition-colors"
                   >
                     Read more →
