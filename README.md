@@ -24,7 +24,7 @@ A modern, production-ready Astro website template built for local service busine
 
 ## Quick Start
 
-Requires **Node.js 22.23 or newer**.
+Requires **Node.js 24** (22.23+ also works).
 
 ```bash
 npm install
@@ -121,7 +121,7 @@ npm run build
 
 Output goes to `dist/`. Deploy to Cloudflare Pages, Netlify, or Vercel.
 
-**Cloudflare Pages (free):** Workers & Pages → Create → Pages → Import an existing Git repository → pick your copy. Framework preset **Astro**, build command `npm run build`, output directory `dist`, and add the environment variable `NODE_VERSION` = `22`.
+**Cloudflare Pages (free):** Workers & Pages → Create → Pages → Import an existing Git repository → pick your copy. Framework preset **Astro**, build command `npm run build`, output directory `dist`, and add the environment variable `NODE_VERSION` = `24`.
 
 ---
 
