@@ -35,7 +35,6 @@ const makeDescription =
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
     <SEO
       title={makeTitle}
       description={makeDescription}
@@ -131,7 +130,7 @@ const makeDescription =
           inView(el, () => {
             animate(el, { opacity: 1, transform: "translate(0px, 0px)" }, { duration: 0.65, delay: Number(el.dataset.aosDelay || 0) / 1000, ease: EASE })
               .then(() => { el.style.transform = ""; });
-          }, { amount: 0.15 });
+          }, { margin: "0px 0px -10% 0px" });
         });
 
         document.querySelectorAll<SVGElement>("main svg[data-icon]").forEach((icon) => {
@@ -142,7 +141,7 @@ const makeDescription =
           inView(icon, () => {
             animate(icon, { opacity: 1, transform: "scale(1) rotate(0deg)" }, { type: "spring", stiffness: 260, damping: 14, delay: 0.15 })
               .then(() => { icon.style.transform = ""; });
-          }, { amount: 0.5 });
+          }, { margin: "0px 0px -5% 0px" });
         });
       }
 
