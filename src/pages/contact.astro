@@ -215,6 +215,7 @@ import { business } from "@/config/business";
           result.className = "text-center py-3 rounded-lg text-sm font-medium bg-green-50 text-green-700";
           result.textContent = "✓ Message received! We'll be in touch soon.";
           form.reset();
+          window.posthog?.capture("quote_submitted", { form: "contact-page", page: location.pathname });
           // Optional: redirect to thank you page
           // window.location.href = "/thank-you";
         } else {

@@ -96,6 +96,16 @@ Place photos in `public/images/`.
 
 Set `CF_ANALYTICS_TOKEN` in your Cloudflare Pages environment variables (Settings → Environment Variables). Get your token from [dash.cloudflare.com](https://dash.cloudflare.com) → Web Analytics. No code changes needed — the analytics script loads automatically when the variable is set, and is omitted entirely when it isn't.
 
+### 5b. Track calls and quote requests with PostHog (optional)
+
+Make a free account at [posthog.com](https://posthog.com), copy your project API key, and set `PUBLIC_POSTHOG_KEY` in your hosting environment variables (and in a local `.env` file to test). If your PostHog project is in the EU cloud, also set `PUBLIC_POSTHOG_HOST` to `https://eu.i.posthog.com`. Redeploy and you'll see:
+
+- **Page views**, automatically.
+- **`phone_clicked`**: someone tapped a phone link. That shows intent, not a completed call.
+- **`quote_submitted`**: a quote form was sent successfully, with which form and page.
+
+Leave the key unset and no PostHog code ships at all.
+
 ### 6. Update the site URL
 
 In `astro.config.mjs`, set `site` to your domain.

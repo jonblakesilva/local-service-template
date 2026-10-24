@@ -121,6 +121,7 @@ const webhookUrl = import.meta.env.PUBLIC_GHL_WEBHOOK_URL ?? "";
             result.className = "text-center py-2 text-sm font-medium text-green-600";
             result.textContent = "✓ Message sent! We'll be in touch within one business day.";
             form.reset();
+            window.posthog?.capture("quote_submitted", { form: "contact-form", page: location.pathname });
           } else {
             result.className = "text-center py-2 text-sm font-medium text-red-600";
             result.textContent = "Something went wrong. Please call us directly.";
