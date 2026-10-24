@@ -86,60 +86,54 @@ import { business } from "@/config/business";
 </div>
 
 <script is:inline>
+  // Shows once per browser session: 25 seconds after the first page load, or on exit intent after that.
+  // Works with page transitions: the popup is looked up on the current page each time, and the page
+  // scroll lock is always released when navigating, so a popup from a previous page can't freeze this one.
   (function () {
+    if (window.__exitPopupInit) return;
+    window.__exitPopupInit = true;
     var SESSION_KEY = "exit_popup_shown";
-    if (sessionStorage.getItem(SESSION_KEY)) return;
-
-    var overlay = document.getElementById("exit-popup-overlay");
-    if (!overlay) return;
-
-    var shown = false;
     var timerElapsed = false;
 
+    function seen() { try { return !!sessionStorage.getItem(SESSION_KEY); } catch (e) { return false; } }
+    function overlay() { return document.getElementById("exit-popup-overlay"); }
+
     function showPopup() {
-      if (shown) return;
-      shown = true;
-      sessionStorage.setItem(SESSION_KEY, "1");
-      overlay.classList.remove("hidden");
-      overlay.classList.add("flex");
+      var o = overlay();
+      if (!o || seen()) return;
+      try { sessionStorage.setItem(SESSION_KEY, "1"); } catch (e) {}
+      o.classList.remove("hidden");
+      o.classList.add("flex");
       document.body.style.overflow = "hidden";
     }
 
     function hidePopup() {
-      overlay.classList.add("hidden");
-      overlay.classList.remove("flex");
+      var o = overlay();
+      if (o) { o.classList.add("hidden"); o.classList.remove("flex"); }
       document.body.style.overflow = "";
     }
 
-    // Show 25 seconds after page load
-    setTimeout(function () {
-      timerElapsed = true;
-      showPopup();
-    }, 25000);
-
-    // Exit intent on desktop — only fires after the 25s timer has elapsed
-    function onMouseLeave(e) {
-      if (timerElapsed && e.clientY <= 0) {
-        showPopup();
-        document.removeEventListener("mouseleave", onMouseLeave);
-      }
+    // Wire up the close buttons on whichever page is showing.
+    function bind() {
+      var o = overlay();
+      if (!o || o.dataset.bound) return;
+      o.dataset.bound = "1";
+      var closeBtn = document.getElementById("exit-popup-close");
+      var dismissBtn = document.getElementById("exit-popup-dismiss");
+      if (closeBtn) closeBtn.addEventListener("click", hidePopup);
+      if (dismissBtn) dismissBtn.addEventListener("click", hidePopup);
+      o.addEventListener("click", function (e) { if (e.target === o) hidePopup(); });
     }
-    document.addEventListener("mouseleave", onMouseLeave);
 
-    // Close handlers
-    var closeBtn = document.getElementById("exit-popup-close");
-    var dismissBtn = document.getElementById("exit-popup-dismiss");
-    if (closeBtn) closeBtn.addEventListener("click", hidePopup);
-    if (dismissBtn) dismissBtn.addEventListener("click", hidePopup);
+    if (!seen()) setTimeout(function () { timerElapsed = true; showPopup(); }, 25000);
 
-    // Click outside the card to close
-    overlay.addEventListener("click", function (e) {
-      if (e.target === overlay) hidePopup();
+    // Exit intent on desktop, only after the 25s timer has elapsed.
+    document.addEventListener("mouseleave", function (e) {
+      if (timerElapsed && e.clientY <= 0) showPopup();
     });
-
-    // Escape key
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") hidePopup();
-    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") hidePopup(); });
+    document.addEventListener("astro:before-swap", function () { document.body.style.overflow = ""; });
+    document.addEventListener("astro:page-load", bind);
+    bind();
   })();
 </script>
