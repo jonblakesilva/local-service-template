@@ -6,7 +6,7 @@ image: {
     src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?&fit=crop&w=430&h=240",
     alt: "contractor checking Google rankings on laptop"
 }
-publishDate: "2024-01-22 09:00"
+publishDate: "2026-07-14 09:00"
 category: "Local SEO"
 author: "The Lead Venture"
 tags: [seo, local-seo, google, contractors]

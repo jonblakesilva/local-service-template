@@ -11,7 +11,7 @@ A modern, production-ready Astro website template built for local service busine
 - **Complete page set** — Home, About, Services, Service Areas, Pricing, Contact, Blog, Privacy Policy, Terms of Service, Thank You, 404
 - **CRO-optimized homepage** — Hero with inline quote form, trust bar, services grid, how it works, stats counter, testimonials, before/after gallery, FAQ, and CTA
 - **SEO-ready** — Schema.org LocalBusiness, AggregateRating, Service, and FAQPage structured data
-- **Scroll animations** — AOS (Animate On Scroll) with Astro View Transitions
+- **Scroll animations** — [Motion](https://motion.dev): sections fade in as they scroll into view, Lucide icons pop in, cards react on hover (respects reduced-motion)
 - **Sticky mobile call bar** — Fixed bottom bar with Call Now + Free Quote buttons (mobile only)
 - **Before/after gallery** — Swap in real project photos with one line of code
 - **Content Collections** — Add services and service areas as Markdown files
@@ -106,7 +106,7 @@ In `astro.config.mjs`, set `site` to your domain.
 
 - [Astro 5](https://astro.build) — Static site generator
 - [Tailwind CSS v4](https://tailwindcss.com) — Utility-first CSS
-- [AOS](https://michalsnik.github.io/aos/) — Scroll animations
+- [Motion](https://motion.dev) — Scroll and hover animations
 - [Lucide Icons](https://lucide.dev) — via astro-icon + @iconify-json/lucide
 - [web3forms](https://web3forms.com) — Contact form (free tier, no backend needed)
 - [Cloudflare Pages](https://pages.cloudflare.com) — Recommended hosting

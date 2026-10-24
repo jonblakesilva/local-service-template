@@ -6,7 +6,7 @@ image: {
     src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?&fit=crop&w=430&h=240",
     alt: "contractor planning seasonal marketing calendar"
 }
-publishDate: "2024-02-08 09:00"
+publishDate: "2026-08-11 09:00"
 category: "Marketing"
 author: "The Lead Venture"
 tags: [marketing, seasonal, leads]

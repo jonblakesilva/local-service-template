@@ -6,7 +6,7 @@ image: {
     src: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?&fit=crop&w=430&h=240",
     alt: "homeowner reviewing financing paperwork with contractor"
 }
-publishDate: "2024-05-08 09:00"
+publishDate: "2026-10-13 09:00"
 category: "Homeowner Tips"
 author: "The Lead Venture"
 tags: [financing, home-services, budgeting, contractors]

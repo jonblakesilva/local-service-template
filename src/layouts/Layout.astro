@@ -53,6 +53,11 @@ const makeDescription =
     <slot name="head" />
     <OrganizationSchema />
     <ClientRouter />
+    <!-- Reloading a page starts at the top (browsers otherwise restore the old scroll spot), unless the link has a #section. -->
+    <script is:inline>
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      document.addEventListener("DOMContentLoaded", function () { if (!location.hash) window.scrollTo(0, 0); });
+    </script>
     <!-- Cloudflare Web Analytics — set CF_ANALYTICS_TOKEN in your environment variables -->
     {import.meta.env.CF_ANALYTICS_TOKEN && (
       <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={`{"token": "${import.meta.env.CF_ANALYTICS_TOKEN}"}`}></script>
@@ -105,20 +110,44 @@ const makeDescription =
     </script>
 
     <script>
-      import AOS from 'aos';
-      import 'aos/dist/aos.css';
+      // Scroll animations with Motion (motion.dev). Anything marked data-aos="fade-up|fade-left|fade-right"
+      // (optional data-aos-delay in ms) fades in as it scrolls into view, and Lucide icons pop in with a spring.
+      // Content already on screen at load is never hidden, so the first paint stays fast.
+      import { animate, inView } from "motion";
 
-      function initAOS() {
-        AOS.init({
-          duration: 650,
-          easing: 'ease-out-cubic',
-          once: true,
-          offset: 50,
+      const OFFSETS: Record<string, [number, number]> = { "fade-up": [0, 28], "fade-down": [0, -28], "fade-left": [28, 0], "fade-right": [-28, 0] };
+      const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+      function initMotion() {
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const below = (el: Element) => el.getBoundingClientRect().top > innerHeight * 0.95;
+
+        document.querySelectorAll<HTMLElement>("[data-aos]").forEach((el) => {
+          if (el.dataset.motion || !below(el)) return;
+          el.dataset.motion = "1";
+          const [x, y] = OFFSETS[el.dataset.aos ?? ""] ?? [0, 28];
+          el.style.opacity = "0";
+          el.style.transform = `translate(${x}px, ${y}px)`;
+          inView(el, () => {
+            animate(el, { opacity: 1, transform: "translate(0px, 0px)" }, { duration: 0.65, delay: Number(el.dataset.aosDelay || 0) / 1000, ease: EASE })
+              .then(() => { el.style.transform = ""; });
+          }, { amount: 0.15 });
+        });
+
+        document.querySelectorAll<SVGElement>("main svg[data-icon]").forEach((icon) => {
+          if (icon.dataset.motion || !below(icon)) return;
+          icon.dataset.motion = "1";
+          icon.style.opacity = "0";
+          icon.style.transform = "scale(0.4) rotate(-20deg)";
+          inView(icon, () => {
+            animate(icon, { opacity: 1, transform: "scale(1) rotate(0deg)" }, { type: "spring", stiffness: 260, damping: 14, delay: 0.15 })
+              .then(() => { icon.style.transform = ""; });
+          }, { amount: 0.5 });
         });
       }
 
-      document.addEventListener('astro:page-load', initAOS);
-      initAOS();
+      document.addEventListener("astro:page-load", initMotion);
+      initMotion();
     </script>
   </body>
 </html>
